@@ -2,6 +2,8 @@ import React from 'react';
 import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 import './CalculatorKeyboard.scss';
 
+const isSign = (str) => ['+', '-', 'x', '÷'].includes(str);
+
 const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
   const clickHandler = (key) => () => {
     switch (key) {
@@ -14,13 +16,21 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
         break;
       case '%':
         break;
-      case '÷':
-        break;
-      case 'x':
-        break;
       case '-':
+        setQuery(
+          isSign(query[query.length - 1]) && isSign(query[query.length - 2])
+            ? query.slice(0, -2) + key
+            : query + key
+        );
         break;
+      case '÷':
+      case 'x':
       case '+':
+        setQuery(
+          isSign(query[query.length - 1])
+            ? query.slice(0, -1) + key
+            : query + key
+        );
         break;
       case '=':
         setQuery(result);
