@@ -19,30 +19,30 @@ const calcQuery = (query) => {
     }
   }
   for (let i = 0; i < operators.length; i++) {
-    if (operators[i] === 'x') {
-      numbers[i] *= numbers[i + 1];
-      numbers.splice(i + 1, 1);
-      operators.splice(i, 1);
-      i--;
-    } else if (operators[i] === '÷') {
-      numbers[i] /= numbers[i + 1];
-      numbers.splice(i + 1, 1);
-      operators.splice(i, 1);
-      i--;
-    }
+    ['x', '÷'].map((sign, index) => {
+      if (operators[i] === sign) {
+        numbers[i] =
+          index === 0
+            ? numbers[i + 1] * numbers[i]
+            : numbers[i] / numbers[i + 1];
+        numbers.splice(i + 1, 1);
+        operators.splice(i, 1);
+        i--;
+      }
+    });
   }
   for (let i = 0; i < operators.length; i++) {
-    if (operators[i] === '+') {
-      numbers[i] += numbers[i + 1];
-      numbers.splice(i + 1, 1);
-      operators.splice(i, 1);
-      i--;
-    } else if (operators[i] === '-') {
-      numbers[i] -= numbers[i + 1];
-      numbers.splice(i + 1, 1);
-      operators.splice(i, 1);
-      i--;
-    }
+    ['+', '-'].map((sign, index) => {
+      if (operators[i] === sign) {
+        numbers[i] =
+          index === 0
+            ? numbers[i + 1] + numbers[i]
+            : numbers[i] - numbers[i + 1];
+        numbers.splice(i + 1, 1);
+        operators.splice(i, 1);
+        i--;
+      }
+    });
   }
   return numbers[0].toString();
 };
