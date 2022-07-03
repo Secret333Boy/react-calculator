@@ -52,7 +52,7 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
   };
   if (!layout)
     layout = [
-      [' ', '<=', 'C', '÷'],
+      ['', '<=', 'C', '÷'],
       ['%', '(', ')', 'x'],
       ['7', '8', '9', '-'],
       ['4', '5', '6', '+'],
