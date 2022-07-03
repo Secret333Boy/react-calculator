@@ -18,6 +18,7 @@ const calcQuery = (query) => {
       i--;
     }
   }
+  console.log(numbers, operators);
   for (let i = 0; i < operators.length; i++) {
     ['x', '÷'].map((sign, index) => {
       if (operators[i] === sign) {
