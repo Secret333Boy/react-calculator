@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CalculatorKeyboad from '../CalculatorKeyboard/CalculatorKeyboard.jsx';
 import CalculatorScreen from '../CalculatorScreen/CalculatorScreen.jsx';
 import './Calculator.scss';
-
-const calcQuery = (query) => query;
+import calcQuery from '../../utils/calcQuery.js';
 
 const Calculator = () => {
   const [query, setQuery] = useState('0');
