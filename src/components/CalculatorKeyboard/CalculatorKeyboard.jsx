@@ -3,8 +3,10 @@ import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 import './CalculatorKeyboard.scss';
 
 const isSign = (str) => ['+', '-', 'x', '÷'].includes(str);
+const isSymbol = (str) => ['+', '-', 'x', '÷', '%', '(', ')'].includes(str);
 
 const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const clickHandler = (key) => () => {
     switch (key) {
       case 'C':
@@ -15,6 +17,7 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
       case ')':
         break;
       case '%':
+        setQuery(isSymbol(query[query.length - 1]) ? query : query + '%');
         break;
       case '-':
         setQuery(

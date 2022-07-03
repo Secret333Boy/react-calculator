@@ -1,16 +1,20 @@
 const signs = ['x', '÷', '+', '-'];
+const signRegex = /[+\x\-÷]/;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const calcQuery = (query) => {
   const numbers = query
-    .split(new RegExp(/[+\x\-÷]/))
-    .map((str) => (str === '' ? NaN : +str));
+    .split(new RegExp(signRegex))
+    .map((str) =>
+      str === '' ? NaN : str.endsWith('%') ? +str.replace('%', '') / 100 : +str
+    );
   const operators = query.split('').filter((char) => signs.includes(char));
+  console.log(numbers, operators);
   for (let i = 0; i < numbers.length; i++) {
     if (isNaN(numbers[i])) {
       numbers.splice(i, 1);
-      const sign = operators.splice(i, 1);
-      if (sign[0] === '-') {
+      const sign = operators.splice(i, 1).pop();
+      if (sign === '-') {
         numbers[i] = -numbers[i];
       } else {
         operators.splice(i - 1, 1);
@@ -18,6 +22,7 @@ const calcQuery = (query) => {
       i--;
     }
   }
+  console.log(numbers, operators);
   for (let i = 0; i < operators.length; i++) {
     if (operators[i] === 'x') {
       numbers[i] *= numbers[i + 1];
@@ -44,7 +49,7 @@ const calcQuery = (query) => {
       i--;
     }
   }
-  return numbers[0].toString();
+  return numbers.pop();
 };
 
 export default calcQuery;
