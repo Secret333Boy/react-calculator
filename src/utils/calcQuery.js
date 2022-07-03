@@ -47,7 +47,7 @@ const calcQuery = (query) => {
       i--;
     }
   }
-  return numbers.pop();
+  return numbers.pop().toString();
 };
 
 export default calcQuery;
