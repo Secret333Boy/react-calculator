@@ -9,7 +9,6 @@ const calcQuery = (query) => {
       str === '' ? NaN : str.endsWith('%') ? +str.replace('%', '') / 100 : +str
     );
   const operators = query.split('').filter((char) => signs.includes(char));
-  console.log(numbers, operators);
   for (let i = 0; i < numbers.length; i++) {
     if (isNaN(numbers[i])) {
       numbers.splice(i, 1);
@@ -22,7 +21,6 @@ const calcQuery = (query) => {
       i--;
     }
   }
-  console.log(numbers, operators);
   for (let i = 0; i < operators.length; i++) {
     if (operators[i] === 'x') {
       numbers[i] *= numbers[i + 1];
