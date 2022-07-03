@@ -18,7 +18,6 @@ const calcQuery = (query) => {
       i--;
     }
   }
-  console.log(numbers, operators);
   for (let i = 0; i < operators.length; i++) {
     if (operators[i] === 'x') {
       numbers[i] *= numbers[i + 1];
