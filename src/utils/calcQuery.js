@@ -7,7 +7,7 @@ import performOperators from './performOperators.js';
 import predictProduct from './predictProduct.js';
 
 const calcQuery = (query) => {
-  if (query.endsWith('(')) query = query.slice(0, -1);
+  while (query.endsWith('(')) query = query.slice(0, -1);
   const moreBracketsNeeded = charCount(query, '(') - charCount(query, ')');
   for (let i = 0; i < moreBracketsNeeded; i++) {
     query += ')';
