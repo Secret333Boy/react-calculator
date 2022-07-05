@@ -1,16 +1,12 @@
+import extractNumbers from './extractNumbers.js';
+import extractOperators from './extractOperators.js';
 import performOperators from './performOperators.js';
 import predictProduct from './predictProduct.js';
-const signs = ['x', '÷', '+', '-'];
-const signRegex = /[+\x\-÷]/;
 
 const calcQuery = (query) => {
   query = predictProduct(query);
-  const numbers = query
-    .split(new RegExp(signRegex))
-    .map((str) =>
-      str === '' ? NaN : str.endsWith('%') ? +str.replace('%', '') / 100 : +str
-    );
-  const operators = query.split('').filter((char) => signs.includes(char));
+  const numbers = extractNumbers(query);
+  const operators = extractOperators(query);
   for (let i = 0; i < numbers.length; i++) {
     if (isNaN(numbers[i])) {
       numbers.splice(i, 1);
