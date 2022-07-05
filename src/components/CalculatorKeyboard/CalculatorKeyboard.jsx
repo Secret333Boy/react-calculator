@@ -2,8 +2,11 @@ import React from 'react';
 import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 import './CalculatorKeyboard.scss';
 
-const isSign = (str) => ['+', '-', 'x', '÷'].includes(str);
-const isSymbol = (str) => ['+', '-', 'x', '÷', '%', '(', ')'].includes(str);
+const signRegex = /[+\x\-÷]/;
+const signs = ['+', '-', 'x', '÷'];
+const symbols = ['+', '-', 'x', '÷', '%', '(', ')'];
+const isSign = (str) => signs.includes(str);
+const isSymbol = (str) => symbols.includes(str);
 
 const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
   // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -44,6 +47,9 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
         setQuery(query.length === 1 ? '0' : query.slice(0, -1));
         break;
       case '.':
+        setQuery(
+          query.split(signRegex).pop().includes('.') ? query : query + '.'
+        );
         break;
       default:
         setQuery(query === '0' ? key : query + key);
