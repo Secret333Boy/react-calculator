@@ -1,4 +1,5 @@
 import React from 'react';
+import charCount from '../../utils/charCount.js';
 import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 import './CalculatorKeyboard.scss';
 
@@ -16,8 +17,20 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
         setQuery('0');
         break;
       case '(':
+        setQuery(query === '0' ? '(' : query + '(');
         break;
       case ')':
+        if (
+          charCount(query, '(') - charCount(query, ')') > 0 &&
+          query[query.length - 1] !== '('
+        ) {
+          setQuery(
+            isSign(query[query.length - 1])
+              ? query.slice(0, -1) +
+                  (query[query.length - 2] !== '(' ? ')' : '')
+              : query + ')'
+          );
+        }
         break;
       case '%':
         setQuery(isSymbol(query[query.length - 1]) ? query : query + '%');
@@ -32,11 +45,13 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
       case '÷':
       case 'x':
       case '+':
-        setQuery(
-          isSign(query[query.length - 1])
-            ? query.slice(0, -1) + key
-            : query + key
-        );
+        if (query[query.length - 1] !== '(') {
+          setQuery(
+            isSign(query[query.length - 1])
+              ? query.slice(0, -1) + key
+              : query + key
+          );
+        }
         break;
       case '=':
         setQuery(result);

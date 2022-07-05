@@ -1,3 +1,5 @@
+import calcAllSubqueries from './calcAllSubqueries.js';
+import charCount from './charCount.js';
 import extractNumbers from './extractNumbers.js';
 import extractOperators from './extractOperators.js';
 import memoize from './memoize.js';
@@ -5,7 +7,13 @@ import performOperators from './performOperators.js';
 import predictProduct from './predictProduct.js';
 
 const calcQuery = (query) => {
+  if (query.endsWith('(')) query = query.slice(0, -1);
+  const moreBracketsNeeded = charCount(query, '(') - charCount(query, ')');
+  for (let i = 0; i < moreBracketsNeeded; i++) {
+    query += ')';
+  }
   query = predictProduct(query);
+  query = calcAllSubqueries(query);
   const numbers = extractNumbers(query);
   const operators = extractOperators(query);
   for (let i = 0; i < numbers.length; i++) {
@@ -21,7 +29,7 @@ const calcQuery = (query) => {
     }
   }
   performOperators(numbers, operators);
-  return numbers.pop().toString();
+  return numbers.pop()?.toString() || '0';
 };
 
 export default memoize(calcQuery);
