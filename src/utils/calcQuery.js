@@ -1,5 +1,6 @@
 import extractNumbers from './extractNumbers.js';
 import extractOperators from './extractOperators.js';
+import memoize from './memoize.js';
 import performOperators from './performOperators.js';
 import predictProduct from './predictProduct.js';
 
@@ -23,4 +24,4 @@ const calcQuery = (query) => {
   return numbers.pop().toString();
 };
 
-export default calcQuery;
+export default memoize(calcQuery);
