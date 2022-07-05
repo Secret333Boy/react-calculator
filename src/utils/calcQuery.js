@@ -1,8 +1,10 @@
 import performOperators from './performOperators.js';
+import predictProduct from './predictProduct.js';
 const signs = ['x', '÷', '+', '-'];
 const signRegex = /[+\x\-÷]/;
 
 const calcQuery = (query) => {
+  query = predictProduct(query);
   const numbers = query
     .split(new RegExp(signRegex))
     .map((str) =>
