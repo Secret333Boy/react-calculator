@@ -57,6 +57,26 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
         setQuery(result);
         break;
       case '+/-':
+        if (query.length === 1 && query[0] === '0') {
+          setQuery('-');
+          break;
+        }
+        if (isSymbol(query[query.length - 1])) {
+          setQuery(
+            query[query.length - 1] === '-' ? query.slice(0, -1) : query + '-'
+          );
+          break;
+        }
+        for (let i = query.length - 1; i >= 0; i--) {
+          if (isSign(query[i])) {
+            if (query[i] === '-') {
+              setQuery(query.slice(0, i) + query.slice(i + 1));
+              break;
+            }
+            setQuery(query.slice(0, i + 1) + '-' + query.slice(i + 1));
+            break;
+          }
+        }
         break;
       case '<=':
         setQuery(query.length === 1 ? '0' : query.slice(0, -1));
@@ -65,6 +85,8 @@ const CalculatorKeyboard = ({ layout, result, query, setQuery }) => {
         setQuery(
           query.split(signRegex).pop().includes('.') ? query : query + '.'
         );
+        break;
+      case '':
         break;
       default:
         setQuery(query === '0' ? key : query + key);
